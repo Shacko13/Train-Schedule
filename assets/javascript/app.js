@@ -20,16 +20,13 @@
   var firstTrain = moment($("#first-train-input").val().trim()); 
   var freq = $("#frequency-input").val().trim();
 
-// Create local "temporary" object for holding train data
-  var newTrain = {
+// Push train data to database
+  database.ref().push({
   	name: trainName,
   	destination: dest,
   	first: firstTrain,
   	frequency: freq
-  };
-
-// Push train data to database
-  database.ref().push(newTrain);
+  })
 
 // Alert that train was added
   alert("Train added successfully");
@@ -50,25 +47,23 @@
   var firstTrain = childSnapshot.val().first;
   var freq = childSnapshot.val().frequency;
 
-  var firstTimeConverted = moment(firstTrain, "hh:mm").subtract(10, "years");
-  var currentTime = moment();
-  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-  var timeRemainder = diffTime % freq;
-  var minutesAway = freq - timeRemainder;
-  var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm");
-  
-// Train info
-  console.log(trainName);
-  console.log(dest);
-  console.log(firstTrain);
-  console.log(freq);
+    console.log(trainName);
+    console.log(dest);
+    console.log(firstTrain);
+    console.log(freq);
 
-  console.log(firstTimeConverted);
-  console.log(moment(currentTime).format("hh:mm"));
-  console.log(diffTime);
-  console.log(timeRemainder);
-  console.log(minutesAway);
-  console.log(moment(nextArrival).format("hh:mm"));
+  var firstTimeConverted = moment(firstTrain, "hh:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+  var currentTime = moment();
+    console.log(moment(currentTime).format("hh:mm"));
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log(diffTime);
+  var timeRemainder = diffTime % freq;
+    console.log(timeRemainder);
+  var minutesAway = freq - timeRemainder;
+    console.log(minutesAway);
+  var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm");
+    console.log(moment(nextArrival).format("hh:mm"));
 
 // Append train info to table on page
   var newElement = $("<tr/>").attr("data-name", trainName);
