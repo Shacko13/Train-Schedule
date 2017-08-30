@@ -12,7 +12,8 @@
   var database = firebase.database();
 
 // Submit button to add train
-  $("#add-train-btn").click(function() {
+  $("#add-train-btn").on("click", function(e) {
+    
 
 // Get user input
   var trainName = $("#train-name-input").val().trim();
